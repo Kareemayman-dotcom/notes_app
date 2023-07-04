@@ -1,14 +1,18 @@
 name: notes_app
 description: A new Flutter project.
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.0.5 <4.0.0'
+  sdk: ">=3.0.5 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  sizer: ^2.0.15
+  icons_plus: ^4.0.0
+  device_preview: ^1.1.0
+  ntp: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +21,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+fonts:
+  - family: Poppins
+    fonts:
+      - asset: assets/fonts/Poppins-Regular.ttf

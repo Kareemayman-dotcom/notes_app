@@ -1,11 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/adapters.dart';
-import 'package:notes_app/views/notes_view.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:device_preview/device_preview.dart';
 
 import 'constants.dart';
+import 'views/notes_view.dart';
 
 void main() async {
   await Hive.initFlutter();

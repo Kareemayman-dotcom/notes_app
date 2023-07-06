@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/constants.dart';
+import 'package:notes_app/models/note_model.dart';
 import 'package:sizer/sizer.dart';
 
+import 'custom_button.dart';
 import 'custom_textfield.dart';
 
 class AddNoteBottomSheet extends StatelessWidget {
@@ -23,11 +25,37 @@ class AddNoteBottomSheet extends StatelessWidget {
             topRight: Radius.circular(30),
           )),
       margin: EdgeInsets.symmetric(horizontal: 5.w),
+      child: AddNoteForm(),
+    );
+  }
+}
+
+class AddNoteForm extends StatefulWidget {
+  const AddNoteForm({
+    super.key,
+  });
+
+  @override
+  State<AddNoteForm> createState() => _AddNoteFormState();
+}
+
+class _AddNoteFormState extends State<AddNoteForm> {
+  final GlobalKey<FormState> formKey = GlobalKey();
+  AutovalidateMode autoValidateMode = AutovalidateMode.disabled;
+  String? title, content;
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: formKey,
+      autovalidateMode: autoValidateMode,
       child: Column(
         children: [
           CustomTextField(
             hintText: "Title",
             maxLines: 1,
+            onSaved: (value) {
+              title = value;
+            },
           ),
           SizedBox(
             height: 2.h,
@@ -35,30 +63,24 @@ class AddNoteBottomSheet extends StatelessWidget {
           CustomTextField(
             hintText: "content",
             maxLines: 250,
+            onSaved: (value) {
+              content = value;
+            },
           ),
           SizedBox(
             height: 2.h,
           ),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              width: 100.w,
-              height: 6.h,
-              decoration: BoxDecoration(
-                color: kPrimaryColor,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Center(
-                child: Text(
-                  'Save',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ),
+          CustomButton(
+            title: title,
+            content: content,
+            onTap: () {
+              if (formKey.currentState!.validate()) {
+                formKey.currentState!.save();
+              } else {
+                autoValidateMode = AutovalidateMode.always;
+                setState(() {});
+              }
+            },
           )
         ],
       ),

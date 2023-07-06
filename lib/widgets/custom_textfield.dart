@@ -1,19 +1,23 @@
+
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:notes_app/constants.dart';
 
 class CustomTextField extends StatelessWidget {
-  String? hintText;
-  int? maxLines;
-  int? maxLength;
-  BoxConstraints? constraints;
+  final String? hintText;
+  final int? maxLines;
+  final int? maxLength;
+  final BoxConstraints? constraints;
+  final void Function(String?)? onSaved;
+
   CustomTextField({
     Key? key,
     this.hintText,
     this.maxLines,
     this.maxLength,
     this.constraints,
+    this.onSaved,
   }) : super(key: key);
 
   @override
@@ -24,9 +28,17 @@ class CustomTextField extends StatelessWidget {
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
       child: Scrollbar(
         radius: Radius.circular(20),
-        child: TextField(
+        child: TextFormField(
+          validator: (value) {
+            if (value?.isEmpty ?? true) {
+              return 'field is requird';
+            } else {
+              return null;
+            }
+          },
+          onSaved: onSaved,
           maxLength: maxLength,
-          scribbleEnabled: true,
+          // scribbleEnabled: true,
           maxLines: maxLines,
           cursorColor: kPrimaryColor,
           decoration: InputDecoration(

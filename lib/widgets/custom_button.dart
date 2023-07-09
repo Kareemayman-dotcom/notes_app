@@ -3,17 +3,17 @@ import 'package:sizer/sizer.dart';
 
 import 'package:notes_app/constants.dart';
 
-import '../models/note_model.dart';
-
 class CustomButton extends StatelessWidget {
   VoidCallback? onTap;
   final String? title;
   final String? content;
+  bool isLoading;
   CustomButton({
     Key? key,
     this.onTap,
     required this.title,
     required this.content,
+    this.isLoading = false,
   }) : super(key: key);
 
   @override
@@ -28,14 +28,19 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Center(
-          child: Text(
-            'Save',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
+          child: isLoading == false
+              ? Text(
+                  'Save',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+              : CircularProgressIndicator(
+                  color: Colors.black
+                  ,
+                ),
         ),
       ),
     );

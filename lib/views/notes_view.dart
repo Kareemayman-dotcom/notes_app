@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/cubits/notes_cubit/notes_cubit.dart';
 import 'package:notes_app/widgets/add_note_bottom_sheet.dart';
 import 'package:notes_app/widgets/notes_view_body.dart';
-import 'package:sizer/sizer.dart';
 
 class NotesView extends StatelessWidget {
   const NotesView({super.key});
@@ -13,7 +13,10 @@ class NotesView extends StatelessWidget {
       resizeToAvoidBottomInset:
           false, // Disable automatic resizing to avoid the keyboard
 
-      body: const NotesViewBody(),
+      body:  BlocProvider(
+        create: (context) => NotesCubit(),
+        child: const NotesViewBody(),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(

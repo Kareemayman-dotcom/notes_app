@@ -1,16 +1,18 @@
+import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:notes_app/cubits/notes_cubit/notes_cubit.dart';
+import 'package:notes_app/models/note_model.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:notes_app/views/edit_note_view.dart';
 
 class NotesItem extends StatelessWidget {
-  final String title;
-  final String content;
+  final NoteModel note;
   const NotesItem({
     Key? key,
-    required this.title,
-    required this.content,
+    required this.note,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class NotesItem extends StatelessWidget {
           context,
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) {
-              return EditNoteView();
+              return EditNoteView(noteModel: note,);
             },
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
@@ -47,7 +49,7 @@ class NotesItem extends StatelessWidget {
                   EdgeInsets.only(left: 5.w, right: 5.w, top: 2.h, bottom: 1.h),
               // tileColor: Colors.yellow,
               title: Text(
-                title,
+                note.title,
                 style: TextStyle(
                   fontSize: 17.sp,
                 ),
@@ -55,7 +57,7 @@ class NotesItem extends StatelessWidget {
               subtitle: Padding(
                 padding: EdgeInsets.only(top: .7.h),
                 child: Text(
-                  content,
+                  note.content,
                   style: TextStyle(
                       fontSize: 13.sp, color: Colors.black.withOpacity(0.5)),
                 ),
@@ -63,10 +65,17 @@ class NotesItem extends StatelessWidget {
               trailing: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    FontAwesome.trash,
-                    color: Colors.black,
-                    size: 20.sp,
+                  GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: () {
+                      note.delete();
+                      BlocProvider.of<NotesCubit>(context).fetchAllNotes();
+                    },
+                    child: Icon(
+                      FontAwesome.trash,
+                      color: Colors.black,
+                      size: 20.sp,
+                    ),
                   ),
                 ],
               ),
@@ -77,7 +86,7 @@ class NotesItem extends StatelessWidget {
                 bottom: 2.h,
               ),
               child: Text(
-                '1/7/2023',
+                note.date,
                 style: TextStyle(
                   color: Colors.black.withOpacity(.5),
                 ),

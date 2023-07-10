@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:notes_app/cubits/notes_cubit/notes_cubit.dart';
 import 'package:notes_app/widgets/custom_appbar.dart';
 import 'package:sizer/sizer.dart';
 
@@ -8,10 +10,10 @@ import 'package:notes_app/widgets/custom_textfield.dart';
 import '../models/note_model.dart';
 
 class EditNoteViewBody extends StatefulWidget {
-  final NoteModel noteModel;
+  final NoteModel note;
   const EditNoteViewBody({
     Key? key,
-    required this.noteModel,
+    required this.note,
   }) : super(key: key);
 
   @override
@@ -19,8 +21,8 @@ class EditNoteViewBody extends StatefulWidget {
 }
 
 class _EditNoteViewBodyState extends State<EditNoteViewBody> {
-    final String? title;
-    final String? content;
+  String? title;
+  String? content;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +34,14 @@ class _EditNoteViewBodyState extends State<EditNoteViewBody> {
       ),
       child: Column(
         children: [
-           CustomAppBar(
+          CustomAppBar(
             title: 'Edit Notes',
             icon: const Icon(FontAwesome.check),
             onTap: () {
+              widget.note.title = title ?? widget.note.title;
+              widget.note.content = content ?? widget.note.content;
+              widget.note.save();
+              BlocProvider.of<NotesCubit>(context).fetchAllNotes();
               Navigator.pop(context);
             },
           ),
@@ -60,6 +66,10 @@ class _EditNoteViewBodyState extends State<EditNoteViewBody> {
           CustomTextField(
             hintText: 'Title',
             maxLines: 1,
+            initialValue: widget.note.title,
+            onChanged: (value) {
+              title = value;
+            },
           ),
           SizedBox(
             height: 2.h,
@@ -67,6 +77,11 @@ class _EditNoteViewBodyState extends State<EditNoteViewBody> {
           CustomTextField(
             hintText: 'Content',
             maxLines: 250,
+            initialValue: widget.note.content,
+            onChanged: (value) {
+              content = value;
+              
+            },
             constraints: BoxConstraints(
               maxHeight: 40.h,
             ),

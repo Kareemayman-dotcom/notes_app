@@ -12,7 +12,7 @@ class EditNoteView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: EditNoteViewBody(noteModel: noteModel),
+      body: EditNoteViewBody(note: noteModel),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -10,14 +11,17 @@ class CustomTextField extends StatelessWidget {
   final int? maxLength;
   final BoxConstraints? constraints;
   final void Function(String?)? onSaved;
-
-  CustomTextField({
+  final void Function(String)? onChanged;
+  final String? initialValue;
+  const CustomTextField({
     Key? key,
     this.hintText,
     this.maxLines,
     this.maxLength,
     this.constraints,
     this.onSaved,
+    this.onChanged,
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -27,7 +31,7 @@ class CustomTextField extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
       child: Scrollbar(
-        radius: Radius.circular(20),
+        radius: const Radius.circular(20),
         child: TextFormField(
           validator: (value) {
             if (value?.isEmpty ?? true) {
@@ -36,6 +40,8 @@ class CustomTextField extends StatelessWidget {
               return null;
             }
           },
+          onChanged: onChanged,
+          initialValue: initialValue,
           onSaved: onSaved,
           maxLength: maxLength,
           // scribbleEnabled: true,

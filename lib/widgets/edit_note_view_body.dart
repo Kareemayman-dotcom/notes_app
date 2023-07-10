@@ -80,7 +80,6 @@ class _EditNoteViewBodyState extends State<EditNoteViewBody> {
             initialValue: widget.note.content,
             onChanged: (value) {
               content = value;
-              
             },
             constraints: BoxConstraints(
               maxHeight: 40.h,

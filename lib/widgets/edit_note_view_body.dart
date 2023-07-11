@@ -1,13 +1,18 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:notes_app/cubits/notes_cubit/notes_cubit.dart';
 import 'package:notes_app/widgets/custom_appbar.dart';
+import 'package:notes_app/widgets/edit_note_colors_list.dart';
 import 'package:sizer/sizer.dart';
 
 import 'package:notes_app/widgets/custom_textfield.dart';
 
+import '../constants.dart';
 import '../models/note_model.dart';
+import 'color_item.dart';
 
 class EditNoteViewBody extends StatefulWidget {
   final NoteModel note;
@@ -85,6 +90,9 @@ class _EditNoteViewBodyState extends State<EditNoteViewBody> {
               maxHeight: 40.h,
             ),
           ),
+          EditNoteColorsList(
+            note: widget.note,
+          )
         ],
       ),
     );

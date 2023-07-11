@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -16,8 +18,10 @@ class NotesViewBody extends StatefulWidget {
 
 class _NotesViewBodyState extends State<NotesViewBody> {
   @override
+  @override
   void initState() {
     BlocProvider.of<NotesCubit>(context).fetchAllNotes();
+
     super.initState();
   }
 
@@ -47,7 +51,7 @@ class _NotesViewBodyState extends State<NotesViewBody> {
 }
 
 class NotesListView extends StatelessWidget {
-  const NotesListView({super.key});
+  NotesListView({super.key});
 
   @override
   Widget build(BuildContext context) {

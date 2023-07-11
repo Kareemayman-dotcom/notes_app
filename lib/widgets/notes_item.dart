@@ -1,28 +1,51 @@
-import 'package:bloc/bloc.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
-import 'package:notes_app/cubits/notes_cubit/notes_cubit.dart';
-import 'package:notes_app/models/note_model.dart';
 import 'package:sizer/sizer.dart';
 
+import 'package:notes_app/cubits/notes_cubit/notes_cubit.dart';
+import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/views/edit_note_view.dart';
 
-class NotesItem extends StatelessWidget {
+class NotesItem extends StatefulWidget {
   final NoteModel note;
-  const NotesItem({
+  // Color? backgroundColor;
+
+  NotesItem({
     Key? key,
     required this.note,
+    // this.backgroundColor,
   }) : super(key: key);
+
+  @override
+  State<NotesItem> createState() => _NotesItemState();
+}
+
+class _NotesItemState extends State<NotesItem> {
   @override
   Widget build(BuildContext context) {
+    // int currentColorIndex = Random().nextInt(colorList.length);
+    // int getNextColorIndex() {
+    //   int nextColorIndex;
+
+    //   do {
+    //     nextColorIndex = Random().nextInt(colorList.length);
+    //   } while (nextColorIndex == currentColorIndex);
+
+    //   return nextColorIndex;
+    // }
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) {
-              return EditNoteView(noteModel: note,);
+              return EditNoteView(
+                noteModel: widget.note,
+              );
             },
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
@@ -39,7 +62,9 @@ class NotesItem extends StatelessWidget {
       },
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18), color: Color(0xffFFCC80)),
+            borderRadius: BorderRadius.circular(18),
+            // color: colorList[getNextColorIndex()],
+            color: Color(widget.note.color)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
@@ -49,7 +74,7 @@ class NotesItem extends StatelessWidget {
                   EdgeInsets.only(left: 5.w, right: 5.w, top: 2.h, bottom: 1.h),
               // tileColor: Colors.yellow,
               title: Text(
-                note.title,
+                widget.note.title,
                 style: TextStyle(
                   fontSize: 17.sp,
                 ),
@@ -57,7 +82,7 @@ class NotesItem extends StatelessWidget {
               subtitle: Padding(
                 padding: EdgeInsets.only(top: .7.h),
                 child: Text(
-                  note.content,
+                  widget.note.content,
                   style: TextStyle(
                       fontSize: 13.sp, color: Colors.black.withOpacity(0.5)),
                 ),
@@ -68,7 +93,7 @@ class NotesItem extends StatelessWidget {
                   GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onTap: () {
-                      note.delete();
+                      widget.note.delete();
                       BlocProvider.of<NotesCubit>(context).fetchAllNotes();
                     },
                     child: Icon(
@@ -86,7 +111,7 @@ class NotesItem extends StatelessWidget {
                 bottom: 2.h,
               ),
               child: Text(
-                note.date,
+                widget.note.date,
                 style: TextStyle(
                   color: Colors.black.withOpacity(.5),
                 ),

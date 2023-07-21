@@ -8,6 +8,7 @@ import 'package:sizer/sizer.dart';
 import 'package:notes_app/cubits/notes_cubit/notes_cubit.dart';
 import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/views/edit_note_view.dart';
+import 'package:uuid/uuid.dart';
 
 class NotesItem extends StatefulWidget {
   final NoteModel note;
@@ -16,8 +17,7 @@ class NotesItem extends StatefulWidget {
   NotesItem({
     Key? key,
     required this.note,
-    // this.backgroundColor,
-  }) : super(key: key);
+  }) : super(key: key) {}
 
   @override
   State<NotesItem> createState() => _NotesItemState();
@@ -26,17 +26,6 @@ class NotesItem extends StatefulWidget {
 class _NotesItemState extends State<NotesItem> {
   @override
   Widget build(BuildContext context) {
-    // int currentColorIndex = Random().nextInt(colorList.length);
-    // int getNextColorIndex() {
-    //   int nextColorIndex;
-
-    //   do {
-    //     nextColorIndex = Random().nextInt(colorList.length);
-    //   } while (nextColorIndex == currentColorIndex);
-
-    //   return nextColorIndex;
-    // }
-
     return GestureDetector(
       onTap: () {
         Navigator.push(

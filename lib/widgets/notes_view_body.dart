@@ -50,27 +50,81 @@ class _NotesViewBodyState extends State<NotesViewBody> {
   }
 }
 
-class NotesListView extends StatelessWidget {
+class NotesListView extends StatefulWidget {
   NotesListView({super.key});
+
+  @override
+  State<NotesListView> createState() => _NotesListViewState();
+}
+
+enum DraggingMode {
+  iOS,
+  android,
+}
+
+class _NotesListViewState extends State<NotesListView> {
+  late List<NoteModel> notes;
+  @override
+  void initState() {
+    super.initState();
+
+    notes = BlocProvider.of<NotesCubit>(context).notes ?? [];
+  }
+
+  // Returns index of item with given key
+  int _indexOfKey(Key key) {
+    return notes.indexWhere((NoteModel d) => d.key == key);
+  }
+
+  bool _reorderCallback(Key item, Key newPosition) {
+    int draggingIndex = _indexOfKey(item);
+    int newPositionIndex = _indexOfKey(newPosition);
+
+    // Uncomment to allow only even target reorder possition
+    // if (newPositionIndex % 2 == 1)
+    //   return false;
+
+    final draggedItem = notes[draggingIndex];
+    setState(() {
+      debugPrint("Reordering $item -> $newPosition");
+      notes.removeAt(draggingIndex);
+      notes.insert(newPositionIndex, draggedItem);
+    });
+    return true;
+  }
+
+  void _reorderDone(Key item) {
+    final draggedItem = notes[_indexOfKey(item)];
+    debugPrint("Reordering finished for ${draggedItem.title}}");
+  }
+
+  //
+  // Reordering works by having ReorderableList widget in hierarchy
+  // containing ReorderableItems widgets
+  //
+
+  DraggingMode _draggingMode = DraggingMode.iOS;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NotesCubit, NotesState>(
       builder: (context, state) {
-        List<NoteModel> notes =
-            BlocProvider.of<NotesCubit>(context).notes ?? [];
-
         return Expanded(
-          child: ListView.separated(
-            separatorBuilder: (context, index) => SizedBox(
-              height: 1.h,
-            ),
-            itemCount: notes.length,
-            itemBuilder: (context, index) {
-              return NotesItem(
-                note: notes[index],
-              );
+          child: ReorderableListView(
+            onReorder: (int oldIndex, int newIndex) {
+              if (oldIndex < newIndex) {
+                newIndex -= 1;
+              }
+              BlocProvider.of<NotesCubit>(context)
+                  .notesReorder(oldIndex: oldIndex, newIndex: newIndex);
             },
+            children: List.generate(
+              notes.length,
+              (index) => NotesItem(
+                key: ValueKey(notes[index].key), // Use ValueKey with note's key
+                note: notes[index],
+              ),
+            ),
           ),
         );
       },

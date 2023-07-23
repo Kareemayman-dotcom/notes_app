@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -109,8 +110,11 @@ class _NotesListViewState extends State<NotesListView> {
   Widget build(BuildContext context) {
     return BlocBuilder<NotesCubit, NotesState>(
       builder: (context, state) {
+        notes = BlocProvider.of<NotesCubit>(context).notes ?? [];
         return Expanded(
           child: ReorderableListView(
+            
+            padding: EdgeInsets.only(top: 3.h),
             onReorder: (int oldIndex, int newIndex) {
               if (oldIndex < newIndex) {
                 newIndex -= 1;

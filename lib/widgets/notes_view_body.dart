@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -9,6 +6,8 @@ import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/widgets/custom_appbar.dart';
 import 'package:notes_app/widgets/notes_item.dart';
 import 'package:sizer/sizer.dart';
+
+import '../generated/l10n.dart';
 
 class NotesViewBody extends StatefulWidget {
   const NotesViewBody({super.key});
@@ -37,7 +36,7 @@ class _NotesViewBodyState extends State<NotesViewBody> {
       child: Column(
         children: [
           CustomAppBar(
-            title: 'Notes',
+            title: S.of(context).home_appbar_title,
             icon: Icon(
               FontAwesome.magnifying_glass,
               color: Colors.white,
@@ -104,7 +103,7 @@ class _NotesListViewState extends State<NotesListView> {
   // containing ReorderableItems widgets
   //
 
-  DraggingMode _draggingMode = DraggingMode.iOS;
+  // DraggingMode _draggingMode = DraggingMode.iOS;
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +112,6 @@ class _NotesListViewState extends State<NotesListView> {
         notes = BlocProvider.of<NotesCubit>(context).notes ?? [];
         return Expanded(
           child: ReorderableListView(
-            
             padding: EdgeInsets.only(top: 3.h),
             onReorder: (int oldIndex, int newIndex) {
               if (oldIndex < newIndex) {

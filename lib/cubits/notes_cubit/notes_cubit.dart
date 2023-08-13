@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 import 'package:meta/meta.dart';
 import 'package:notes_app/models/note_model.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../constants.dart';
 

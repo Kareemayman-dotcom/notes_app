@@ -3,6 +3,8 @@ import 'package:sizer/sizer.dart';
 
 import 'package:notes_app/constants.dart';
 
+import '../generated/l10n.dart';
+
 class CustomButton extends StatelessWidget {
   VoidCallback? onTap;
   final String? title;
@@ -30,7 +32,7 @@ class CustomButton extends StatelessWidget {
         child: Center(
           child: isLoading == false
               ? Text(
-                  'Save',
+                  S.of(context).save_button_title,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 14.sp,
@@ -38,8 +40,7 @@ class CustomButton extends StatelessWidget {
                   ),
                 )
               : CircularProgressIndicator(
-                  color: Colors.black
-                  ,
+                  color: Colors.black,
                 ),
         ),
       ),

@@ -17,9 +17,10 @@ dependencies:
   bloc: ^8.1.2
   flutter_bloc: ^8.1.3
   modal_progress_hud_nsn: ^0.4.0
-  intl: ^0.18.1
+  intl: ^0.18.0
   uuid: ^3.0.7
-
+  flutter_localizations:
+    sdk: flutter
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -33,3 +34,5 @@ fonts:
   - family: Poppins
     fonts:
       - asset: assets/fonts/Poppins-Regular.ttf
+flutter_intl:
+  enabled: true

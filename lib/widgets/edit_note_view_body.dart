@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,9 +9,8 @@ import 'package:sizer/sizer.dart';
 
 import 'package:notes_app/widgets/custom_textfield.dart';
 
-import '../constants.dart';
+import '../generated/l10n.dart';
 import '../models/note_model.dart';
-import 'color_item.dart';
 
 class EditNoteViewBody extends StatefulWidget {
   final NoteModel note;
@@ -40,7 +38,7 @@ class _EditNoteViewBodyState extends State<EditNoteViewBody> {
       child: Column(
         children: [
           CustomAppBar(
-            title: 'Edit Notes',
+            title: S.of(context).edit_note_appbar_title,
             icon: const Icon(FontAwesome.check),
             onTap: () {
               widget.note.title = title ?? widget.note.title;
@@ -69,7 +67,7 @@ class _EditNoteViewBodyState extends State<EditNoteViewBody> {
             height: 5.h,
           ),
           CustomTextField(
-            hintText: 'Title',
+            hintText: S.of(context).note_textfield_title,
             maxLines: 1,
             initialValue: widget.note.title,
             onChanged: (value) {
@@ -80,7 +78,7 @@ class _EditNoteViewBodyState extends State<EditNoteViewBody> {
             height: 2.h,
           ),
           CustomTextField(
-            hintText: 'Content',
+            hintText: S.of(context).note_textfield_content,
             maxLines: 250,
             initialValue: widget.note.content,
             onChanged: (value) {

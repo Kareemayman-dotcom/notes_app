@@ -5,6 +5,7 @@ import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:notes_app/models/note_model.dart';
 import 'package:sizer/sizer.dart';
 
+import '../generated/l10n.dart';
 import 'colors_list_view.dart';
 import 'custom_button.dart';
 import 'custom_textfield.dart';
@@ -30,7 +31,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
       child: Column(
         children: [
           CustomTextField(
-            hintText: "Title",
+            hintText: S.of(context).note_textfield_title,
             maxLines: 1,
             onSaved: (value) {
               title = value;
@@ -40,7 +41,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
             height: 2.h,
           ),
           CustomTextField(
-            hintText: "content",
+            hintText: S.of(context).note_textfield_content,
             maxLines: 250,
             onSaved: (value) {
               content = value;
@@ -75,7 +76,6 @@ class _AddNoteFormState extends State<AddNoteForm> {
 
                     await BlocProvider.of<AddNoteCubit>(context)
                         .addnote(noteModel);
-                        
                   } else {
                     autoValidateMode = AutovalidateMode.always;
                     setState(() {});
